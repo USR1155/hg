@@ -1,0 +1,14 @@
+`include "full_add.v"
+
+module add8(
+    input  wire [7:0] A,
+    input  wire [7:0] B,
+
+    input  wire C,
+
+    output wire [8:0] Z
+ );
+
+  adder hg (A, B, C, Z);
+
+endmodule

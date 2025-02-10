@@ -1,0 +1,31 @@
+module adder (
+    input wire A, 
+    input wire B, 
+    input wire C, 
+    output wire [1:0] Z
+);
+    wire A1 = (A & B) | (B & C) | (A & C);
+    wire X1 = A ^ B ^ C;
+    assign Z = {A1, X1};
+endmodule
+
+module add8(
+    input wire [7:0] A, 
+    input wire [7:0] B, 
+    input wire C, 
+    output wire [8:0] Z
+);
+    wire [7:0] carry;
+    wire [7:0] sum;
+
+    adder add0 (A[0:0], B[0:0], C, {carry[0], sum[0]});
+    adder add1 (A[1:0], B[1:0], carry[0], {carry[1], sum[1]});
+    adder add2 (A[2:0], B[2:0], carry[1], {carry[2], sum[2]});
+    adder add3 (A[3:0], B[3:0], carry[2], {carry[3], sum[3]});
+    adder add4 (A[4:0], B[4:0], carry[3], {carry[4], sum[4]});
+    adder add5 (A[5:0], B[5:0], carry[4], {carry[5], sum[5]});
+    adder add6 (A[6:0], B[6:0], carry[5], {carry[6], sum[6]});
+    adder add7 (A[7:0], B[7:0], carry[6], {carry[7], sum[7]});
+
+    assign Z = {carry[7], sum};
+endmodule
